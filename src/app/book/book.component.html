@@ -1,0 +1,45 @@
+<div>
+    <button (click)="toggleAddBookForm()">Add Book</button>
+    @if (isToggle) {
+    <div>
+        <form [formGroup]="bookForm">
+            <label>Title: </label>
+            <input type="text" formControlName="title">
+            @if (titleControl?.invalid && titleControl?.touched) {
+                <p>Title is required.</p>
+            }
+            <label>Author: </label>
+            <input type="text" formControlName="author">
+            @if (authorControl?.invalid && authorControl?.touched) {
+                <p>Author is required.</p>
+            }
+            <label for="category">Select Category:</label>
+            <select id="category" formControlName="category">
+                <option value="Fiction">Fiction</option>
+                <option value="NonFiction">Non-Fiction</option>
+                <option value="Biography">Biography</option>
+                <option value="Children">Children</option>
+                <option value="Science">Science</option>
+            </select>
+            @if (categoryControl?.invalid && categoryControl?.touched) {
+                <p>Category is required.</p>
+            }
+        </form>
+        <button (click)="addBook()">Submit</button>
+    </div>
+    }
+    @for (book of books; track $index) {
+    <section>
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.author }}</p>
+        <p>{{ book.category }}</p>
+        @if (book.isAvailable) {
+        <p>This book is Available</p>
+        <button>Borrow</button>
+        }
+        @else {
+        <p>This book is Unavailable</p> 
+        }
+    </section>
+    }
+</div>
