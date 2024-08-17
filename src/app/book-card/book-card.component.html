@@ -1,0 +1,24 @@
+@for (book of books; track $index) {
+<div class="card w-full bg-base-100 shadow-xl">
+    <figure>
+        <img [src]="book.image" alt="Book Image 1" class="w-full h-48 object-cover" />
+    </figure>
+    <div class="card-body">
+        <h2 class="card-title">Title: {{ book.title }}</h2>
+        <p class="text-sm text-gray-500">Author: {{ book.author }}</p>
+        <p class="text-sm text-gray-500">Category: {{ book.category }}</p>
+        @if (book.isAvailable) {
+        <p class="mt-2">This book is Available</p>
+        <div class="card-actions justify-end mt-4">
+            <app-borrow [bookTitle]="book.title"></app-borrow>
+        </div>
+        }
+        @else {
+        <p class="mt-2">This book is Available</p>
+        <div class="card-actions justify-end mt-4">
+            <app-return [bookTitle]="book.title"></app-return> 
+        </div>
+        }
+    </div>
+</div>
+}

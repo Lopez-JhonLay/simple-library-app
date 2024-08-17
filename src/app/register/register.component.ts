@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { LibraryMemberService } from '../service/library-member.service';
+import { SuccessAlertComponent } from '../success-alert/success-alert.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SuccessAlertComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
-  isToggle = false;
+  @ViewChild('modal') modal!: ElementRef<HTMLDialogElement>;
 
   registerForm!: FormGroup;
 
@@ -28,8 +29,13 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('name');
   }
 
-  toggleRegisterForm(): void {
-    this.isToggle = !this.isToggle;
+  openModal() {
+    this.modal.nativeElement.showModal();
+  }
+
+  closeModal() {
+    this.registerForm.reset(); 
+    this.modal.nativeElement.close();
   }
 
   registerMember() {
@@ -38,15 +44,24 @@ export class RegisterComponent implements OnInit {
     let name = this.registerForm.value;
 
     const memberDetails = {
-      memberId: this.startID,
+      member_id: this.startID,
       ...name,
-      booksBorrowed: []
+      books_borrowed: []
     }
 
-    this.memberService.insertMember(memberDetails);
+    if (this.memberService.insertMember(memberDetails)) {
+      this.memberService.alertMessage = `Member "${this.nameControl?.value}" with ID Number "${this.startID}" is added.`;
+      this.memberService.showAlert = true;
+
+      setTimeout(() => {
+        this.memberService.showAlert = false;
+      }, 5000);
+    };
 
     this.startID++;
 
     this.registerForm.reset();
+
+    this.closeModal();
   }
 }

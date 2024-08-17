@@ -1,0 +1,19 @@
+<button (click)="toggleBorrowBookForm()" class="btn btn-primary">
+    Borrow
+</button>
+
+@if (isToggle) {
+<div>
+    <form [formGroup]="borrowForm">
+        <label>Member ID: </label>
+        <input type="number" formControlName="member_id">
+        @if (idControl?.invalid && idControl?.touched) {
+            <p>Your ID is required.</p>
+        }
+        <label>Title: </label>
+        <input type="text" [value]="bookTitle" 
+            readonly>
+    </form>
+    <button (click)="borrowBook()">Submit</button>
+</div>
+}

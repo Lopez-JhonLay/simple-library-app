@@ -1,45 +1,96 @@
 <div>
-    <button (click)="toggleAddBookForm()">Add Book</button>
-    @if (isToggle) {
-    <div>
-        <form [formGroup]="bookForm">
-            <label>Title: </label>
-            <input type="text" formControlName="title">
-            @if (titleControl?.invalid && titleControl?.touched) {
-                <p>Title is required.</p>
-            }
-            <label>Author: </label>
-            <input type="text" formControlName="author">
-            @if (authorControl?.invalid && authorControl?.touched) {
-                <p>Author is required.</p>
-            }
-            <label for="category">Select Category:</label>
-            <select id="category" formControlName="category">
-                <option value="Fiction">Fiction</option>
-                <option value="NonFiction">Non-Fiction</option>
-                <option value="Biography">Biography</option>
-                <option value="Children">Children</option>
-                <option value="Science">Science</option>
-            </select>
-            @if (categoryControl?.invalid && categoryControl?.touched) {
-                <p>Category is required.</p>
-            }
-        </form>
-        <button (click)="addBook()">Submit</button>
-    </div>
-    }
-    @for (book of books; track $index) {
-    <section>
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.author }}</p>
-        <p>{{ book.category }}</p>
-        @if (book.isAvailable) {
-        <p>This book is Available</p>
-        <button>Borrow</button>
-        }
-        @else {
-        <p>This book is Unavailable</p> 
-        }
-    </section>
-    }
+    <button (click)="openModal()" class="btn btn-xs sm:btn-sm md:btn-md btn-primary">
+        Add Book
+    </button>
+    
+    <dialog #modal id="my_modal_1" class="modal">
+        <div class="modal-box">
+          <h3 class="text-lg font-bold">Hello!</h3>
+          <p class="py-4">Please enter Book Details</p>
+          <div>
+              <form [formGroup]="bookForm" class="flex gap-2 flex-col">
+                  <label class="input input-bordered flex items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        class="h-4 w-4 opacity-70">
+                        <path
+                          d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                      </svg>
+                      <input 
+                          type="text" 
+                          formControlName="title" 
+                          class="grow" 
+                          placeholder="Title" />
+                  </label>
+                  @if (titleControl?.invalid && titleControl?.touched) {
+                      <p class="text-red-500">Title is required.</p>
+                  }
+                <label class="input input-bordered flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      class="h-4 w-4 opacity-70">
+                      <path
+                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    </svg>
+                    <input 
+                        type="text" 
+                        formControlName="author" 
+                        class="grow" 
+                        placeholder="Author" />
+                </label>
+                @if (authorControl?.invalid && authorControl?.touched) {
+                    <p class="text-red-500">Author is required.</p>
+                }
+                <label class="input input-bordered flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      class="h-4 w-4 opacity-70">
+                      <path
+                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    </svg>
+                    <select id="category" formControlName="category" class="grow">
+                        <option value="Fiction">Fiction</option>
+                        <option value="NonFiction">Non-Fiction</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Children">Children</option>
+                        <option value="Science">Science</option>
+                    </select>
+                </label>
+                @if (authorControl?.invalid && authorControl?.touched) {
+                    <p class="text-red-500">Category is required.</p>
+                }
+                <label class="input input-bordered flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      class="h-4 w-4 opacity-70">
+                      <path
+                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    </svg>
+                    <input 
+                        type="text" 
+                        formControlName="image" 
+                        class="grow" 
+                        placeholder="Image Link" />
+                </label>
+                @if (imageControl?.invalid && imageControl?.touched) {
+                    <p class="text-red-500">Image is required.</p>
+                }
+              </form>
+          </div>
+          <div class="modal-action">
+              <button (click)="addBook()" class="btn btn-accent">
+                  Submit
+              </button>
+              <button (click)="closeModal()" class="btn btn-error">Close</button>
+          </div>
+        </div>
+      </dialog>
 </div>

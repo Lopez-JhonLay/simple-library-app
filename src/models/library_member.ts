@@ -2,6 +2,6 @@ import { Book } from "./book"
 
 export type LibraryMember = {
     name: string,
-    memberId: number,
-    booksBorrowed: Book[]
+    member_id: number,
+    books_borrowed: Book[]
 }

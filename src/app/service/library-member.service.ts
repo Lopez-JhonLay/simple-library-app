@@ -7,9 +7,13 @@ import { LibraryMember } from '../../models/library_member';
 export class LibraryMemberService {
   members: LibraryMember[] = [];
 
-  insertMember(member: LibraryMember) {
-    this.members.push(member);
+  showAlert = false;
 
-    alert(`Member "${member.name}" is added.`);
+  alertMessage = '';
+
+  insertMember(member: LibraryMember): boolean {
+    this.members.push(member);
+    
+    return true;
   }
 }
