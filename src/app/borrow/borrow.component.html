@@ -1,19 +1,55 @@
-<button (click)="toggleBorrowBookForm()" class="btn btn-primary">
+<button (click)="openModal()" class="btn btn-primary">
     Borrow
 </button>
 
-@if (isToggle) {
 <div>
-    <form [formGroup]="borrowForm">
-        <label>Member ID: </label>
-        <input type="number" formControlName="member_id">
-        @if (idControl?.invalid && idControl?.touched) {
-            <p>Your ID is required.</p>
-        }
-        <label>Title: </label>
-        <input type="text" [value]="bookTitle" 
-            readonly>
-    </form>
-    <button (click)="borrowBook()">Submit</button>
+    <dialog #modal id="my_modal_1" class="modal">
+        <div class="modal-box">
+          <h3 class="text-lg font-bold">Hello!</h3>
+          <p class="py-4">Please enter your ID to borrow this Book</p>
+          <div>
+              <form [formGroup]="borrowForm" class="flex gap-2 flex-col">
+                  <label class="input input-bordered flex items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        class="h-4 w-4 opacity-70">
+                        <path
+                          d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                      </svg>
+                      <input 
+                          type="number" 
+                          formControlName="member_id" 
+                          class="grow" 
+                          placeholder="Member ID" />
+                  </label>
+                  @if (idControl?.invalid && idControl?.touched) {
+                  <p class="text-red-500">Your ID is required.</p>
+                  }
+                <label class="input input-bordered flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      class="h-4 w-4 opacity-70">
+                      <path
+                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    </svg>
+                    <input 
+                        type="text" 
+                        class="grow" 
+                        [value]="bookTitle"
+                        readonly />
+                </label>
+              </form>
+          </div>
+          <div class="modal-action">
+              <button (click)="borrowBook()" class="btn btn-accent">
+                  Submit
+              </button>
+              <button (click)="closeModal()" class="btn btn-error">Close</button>
+          </div>
+        </div>
+    </dialog>
 </div>
-}

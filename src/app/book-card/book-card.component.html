@@ -8,13 +8,13 @@
         <p class="text-sm text-gray-500">Author: {{ book.author }}</p>
         <p class="text-sm text-gray-500">Category: {{ book.category }}</p>
         @if (book.isAvailable) {
-        <p class="mt-2">This book is Available</p>
+        <p class="mt-2 text-green-500">This book is Available</p>
         <div class="card-actions justify-end mt-4">
             <app-borrow [bookTitle]="book.title"></app-borrow>
         </div>
         }
         @else {
-        <p class="mt-2">This book is Available</p>
+        <p class="mt-2 text-red-500">This book is Unavailable</p>
         <div class="card-actions justify-end mt-4">
             <app-return [bookTitle]="book.title"></app-return> 
         </div>

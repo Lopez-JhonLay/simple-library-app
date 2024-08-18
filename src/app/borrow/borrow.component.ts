@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { BookService } from '../service/book.service';
 import { LibraryMemberService } from '../service/library-member.service';
@@ -11,7 +11,7 @@ import { LibraryMemberService } from '../service/library-member.service';
   styleUrl: './borrow.component.css'
 })
 export class BorrowComponent implements OnInit {
-  isToggle = false;
+  @ViewChild('modal') modal!: ElementRef<HTMLDialogElement>;
 
   @Input() bookTitle!: string;
 
@@ -30,8 +30,13 @@ export class BorrowComponent implements OnInit {
     });
   }
 
-  toggleBorrowBookForm(): void {
-    this.isToggle = !this.isToggle;
+  openModal() {
+    this.modal.nativeElement.showModal();
+  }
+
+  closeModal() {
+    this.borrowForm.reset(); 
+    this.modal.nativeElement.close();
   }
 
   get idControl() {
@@ -60,6 +65,11 @@ export class BorrowComponent implements OnInit {
 
     book.isAvailable = false;
     member.books_borrowed.push(book);
-    alert(`Book "${this.bookTitle}" borrowed by member ${memberId}.`);
+    this.bookService.alertMessage = `Book "${this.bookTitle}" borrowed by member ${memberId}.`;
+    this.bookService.showAlert = true;
+
+    setTimeout(() => {
+      this.bookService.showAlert = false;
+    }, 5000);
   }
 }

@@ -5,7 +5,7 @@ import { LibraryMember } from '../../models/library_member';
   providedIn: 'root'
 })
 export class LibraryMemberService {
-  members: LibraryMember[] = [];
+  members: LibraryMember[] = JSON.parse(localStorage.getItem('members') || '[]');
 
   showAlert = false;
 
@@ -13,7 +13,7 @@ export class LibraryMemberService {
 
   insertMember(member: LibraryMember): boolean {
     this.members.push(member);
-    
+    localStorage.setItem('members', JSON.stringify(this.members));
     return true;
   }
 }

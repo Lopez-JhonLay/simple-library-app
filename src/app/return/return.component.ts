@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { BookService } from '../service/book.service';
 import { LibraryMemberService } from '../service/library-member.service';
@@ -11,7 +11,7 @@ import { LibraryMemberService } from '../service/library-member.service';
   styleUrl: './return.component.css'
 })
 export class ReturnComponent {
-  isToggle = false;
+  @ViewChild('modal') modal!: ElementRef<HTMLDialogElement>;
 
   @Input() bookTitle!: string;
 
@@ -30,8 +30,13 @@ export class ReturnComponent {
     });
   }
 
-  toggleReturnBookForm(): void {
-    this.isToggle = !this.isToggle;
+  openModal() {
+    this.modal.nativeElement.showModal();
+  }
+
+  closeModal() {
+    this.returnForm.reset(); 
+    this.modal.nativeElement.close();
   }
 
   get idControl() {
@@ -58,7 +63,13 @@ export class ReturnComponent {
     const book = member.books_borrowed[bookIndex];
     book.isAvailable = true;
     member.books_borrowed.splice(bookIndex, 1);
-    alert(`Book "${this.bookTitle}" returned by member ${memberId}.`);
+    this.bookService.alertMessage = `Book "${this.bookTitle}" returned by member ${memberId}.`;
+
+    this.bookService.showAlert = true;
+
+    setTimeout(() => {
+      this.bookService.showAlert = false;
+    }, 5000);
   } 
 
 }

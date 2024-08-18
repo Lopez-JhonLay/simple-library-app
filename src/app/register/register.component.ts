@@ -21,12 +21,22 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      course: ['', [Validators.required]],
+      year_section: ['', [Validators.required]]
     });
   }
 
   get nameControl() {
     return this.registerForm.get('name');
+  }
+
+  get courseControl() {
+    return this.registerForm.get('course');
+  }
+
+  get yearSectionControl() {
+    return this.registerForm.get('year_section');
   }
 
   openModal() {

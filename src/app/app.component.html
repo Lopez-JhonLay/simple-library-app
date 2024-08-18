@@ -2,8 +2,11 @@
     <div class="font-bold uppercase">
         Library Management System
     </div>
-    <div class="w-96 mt-2 flex justify-between sm:mt-0">
+    <div class="w-auto mt-2 flex gap-3 sm:mt-0">
         <app-book></app-book>
+        <button class="btn btn-xs sm:btn-sm md:btn-md btn-warning">
+            View Members
+        </button>
         <app-register></app-register>
         <div>
             <button (click)="toggleTheme()" class="btn btn-xs sm:btn-sm md:btn-md">

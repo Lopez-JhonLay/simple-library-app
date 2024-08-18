@@ -6,7 +6,7 @@ import { BookCategory } from '../../models/book_category';
   providedIn: 'root'
 })
 export class BookService {
-  books: Book[] = [];
+  books: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
 
   showAlert = false;
 
@@ -14,7 +14,7 @@ export class BookService {
 
   insertBook(book: Book): boolean {
     this.books.push(book);
-    
+    localStorage.setItem('books', JSON.stringify(this.books));
     return true;
   }
 }
